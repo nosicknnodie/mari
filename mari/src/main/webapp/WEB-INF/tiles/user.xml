@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="user_layout" template="/WEB-INF/layout/user/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/layout/main/header.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/layout/user/body.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/layout/main/footer.jsp"/>
+	</definition>
+	
+	<definition name="user.join" extends="user_layout">
+		<put-attribute name="body" value="/WEB-INF/view/user/joinbody.jsp"/>
+	</definition>
+	<definition name="user.login" extends="user_layout">
+		<put-attribute name="body" value="/WEB-INF/view/user/loginbody.jsp"/>
+	</definition>
+	
+</tiles-definitions>

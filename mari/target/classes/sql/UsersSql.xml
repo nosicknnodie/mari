@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="usersSql">
+	<select id="loginCheck" parameterType="userVo" resultType="userVo">
+		SELECT 
+			idx,			id,
+			email,		level,
+			reg_date regDate
+		 FROM 
+			users 
+		WHERE 
+			email = #{email}
+		AND 
+			pass = #{pass}
+	</select>
+	<select id="selectIdCount" parameterType="string" resultType="int">
+		SELECT
+			COUNT(id) cnt
+		FROM
+			users
+		WHERE
+			id = #{id}
+	</select>
+	<select id="selectEmailCount" parameterType="string" resultType="int">
+		SELECT
+			COUNT(email) cnt
+		FROM
+			users
+		WHERE
+			email = #{email}
+	</select>
+	<insert id="insertUser"  parameterType="userVo">
+		INSERT INTO users (
+		  id,
+		  email,
+		  pass,
+		  level,
+		  reg_date
+		)
+		VALUES(
+		  #{id},
+		  #{email},
+		  #{pass},
+		  1,
+		  NOW()
+		)
+	</insert>
+</mapper>
+

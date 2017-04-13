@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+    
+    <aop:aspectj-autoproxy />
+    
+	<util:properties id="db" location="classpath:properties/db.properties" />
+	<util:properties id="file" location="classpath:properties/file.properties" />
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+	  <property name="driverClassName" value="#{db['db.driver']}" />
+	  <property name="url" value="#{db['db.url']}" />
+	  <property name="username" value="#{db['db.username']}" />
+	  <property name="password" value="#{db['db.password']}" />
+	  <property name="validationQuery" value="select 1 FROM DUAL" />
+	</bean>
+		
+	 <!-- MyBatis 설정 -->
+	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath*:sql/**" />
+        <property name="configLocation" value="classpath:/spring/mybatis/sqlMapConfig.xml" />
+	 </bean>
+	 <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	        <constructor-arg ref="sqlSessionFactory" />
+	 </bean>
+			
+	<!-- ibatis설정 -->
+	<!-- <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+	 	<property name="dataSource" ref="dataSource" />
+	 	property name="configLocation" value="classpath:spring/mybatis-config.xml"/
+	 	<property name="configLocation">
+	 		<value>/WEB-INF/spring/ibatis/sqlMapConfig.xml</value>
+	 	</property>
+	 </bean>
+	 sqlSession
+	 <bean id="sqlSession" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+	 	<property name="sqlMapClient" ref="sqlMapClient" />
+	 </bean> -->
+	 
+	 
+	 
+	 <!-- 트랜젝션 관리 -->
+	<!--  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource" />
+	 </bean>
+	 <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+	 -->
+	 <bean id="pwEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+	 	<constructor-arg name="strength" value="256"></constructor-arg>
+	 </bean>
+	 
+	 <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	 	<property name="maxUploadSize" value="100000000"></property>
+	 </bean>
+</beans>
