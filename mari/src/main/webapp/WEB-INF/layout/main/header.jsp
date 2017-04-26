@@ -31,5 +31,11 @@
 	         	<li><a href="${pageContext.request.contextPath }/user/logout/">log-out</a></li>
 	         	</c:if> 
 	         </ul>
+	         <form class="navbar-form navbar-right">
+		      <div class="form-group">
+		        <input type="text" class="form-control" placeholder="작품 검색">
+		      </div>
+		      <button type="submit" class="btn btn-default">검색</button>
+		    </form>
 	       </div><!--/.nav-collapse -->
 	</div>
